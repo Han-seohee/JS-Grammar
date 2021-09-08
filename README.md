@@ -254,3 +254,71 @@ console.log('와아' || '여기 안봐요'); // 와아
 console.log([] || '노노'); // []
 ```
 
+---
+2021.09.09
+### :dog:함수의 기본 파라미터
+>함수로 호출시 원래 넣어야 할 파라미터를 넣지 않게 됐을 때 기본값으로 사용할 값을 지정하는것
+
++ 원의 넓이를 구하는 함수
+
+```
+function calculateCircleArea(r) {
+ return Math.PI * r * r;
+}
+
+const area = calculateCircleArea(4);
+console.log(area)
+
+// 50.26548245743669
+```
+
+>4를 넣지 않는다면
+
+```
+function calculateCircleArea(r) {
+ feturn Math.PI * r * r;
+}
+
+const area = calculateCircleArea();
+console.log(area)
+
+// NaN
+```
+
+>파라미터를 넣어야하는데 안넣었을 때 어떤 값을 기본값으로 사용하고 싶을 때
+>>단축 평가 논리 계산법
+
+```
+function calculateCircleArea(r) {
+ const radius = r || 1;
+ return Math.PI * radius * radius;
+}
+
+const area = calculateCircleArea();
+console.log(area)
+
+//  3.141592653589793
+```
+
+>ES6 함수 기본 파라미터 문법
+
+```
+function calculateCircleArea(r = 1) {   // 1을 기본값으로 사용
+ return Math.PI * r* r;
+}
+
+const area = calculateCircleArea();
+console.log(area)
+
+//  3.141592653589793
+```
+
+>화살표 함수
+```
+const calculateCircleArea = (r = 1) => Math.PI * r* r;
+
+const area = calculateCircleArea();
+console.log(area)
+
+//  3.141592653589793
+```
