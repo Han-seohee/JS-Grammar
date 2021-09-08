@@ -368,7 +368,7 @@ console.log(isAnimal('노트북'));
    false (노트북은 없으니까)
 ```
 
-+주어진 값에 따라 다른 결과물을 반환해야 할 때
++ 주어진 값에 따라 다른 결과물을 반환해야 할 때
 
 ```
 function getSound(animal) {
