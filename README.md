@@ -322,3 +322,151 @@ console.log(area)
 
 //  3.141592653589793
 ```
+
+---
+### :dog:조건문 더 스마트하게 쓰기
++ 특정 값이 여러 값 중에 하나인지 확인하기
+
+```
+function isAnimal(text) {
+ return (
+  text === '고양이' || text === '개' || text === '거북이' || text === '너구리'
+ );
+}
+
+console.log(isAnimal('개'));
+console.log(isAnimal('노트북'));
+
+// true
+   false (노트북은 없으니까)
+```
+
+:point_down:비교하고 싶은것을 배열안에 넣는다
+
+```
+function isAnimal(text) {
+ const animals = ['고양이', '개', '거북이', '너구리'];
+ return animals.includes(text);
+}
+
+console.log(isAnimal('개'));
+console.log(isAnimal('노트북'));
+
+// true
+   false (노트북은 없으니까)
+```
+
+:point_down:화살표함수
+
+```
+const isAnimal = text => ['고양이', '개', '거북이', '너구리'].includes(text);
+
+console.log(isAnimal('개'));
+console.log(isAnimal('노트북'));
+
+// true
+   false (노트북은 없으니까)
+```
+
++주어진 값에 따라 다른 결과물을 반환해야 할 때
+
+```
+function getSound(animal) {
+ if (animal === '개') return '멍멍!';       // if 문이 한 줄이면 블록 생략 가능
+ if (animal === '고양이') return '야옹-';
+ if (animal === '참새') return '짹짹';
+ if (animal === '비둘기') return '구구 구 구';
+ return '...?';
+}
+
+console.log(getSound('개'));
+console.log(getSound('비둘기'));
+console.log(getSound('인간'));
+
+// 멍멍!
+   구구 구 구
+   ...?
+```
+
+:point_down: switch case (추천x)
+
+```
+function getSound(animal) { //switch case 안에서 return을 하게 된다면 굳이 break 할 필요 없음
+ switch (animal) {
+  case '개':
+   return '멍멍!';
+  case '고양이':
+   return '야옹-';
+  case '참새':
+   return '짹짹';
+  case '비둘기':
+   return '구구 구 구!';
+  default:
+   return '...?'
+  }
+}
+
+console.log(getSound('개'));
+console.log(getSound('비둘기'));
+console.log(getSound('인간'));
+
+// 멍멍!
+   구구 구 구!
+   ...?
+```
+
+:point_down: 객체 활용 (깔끔:o: 추천:o:)
+>어떤 값을 넣느냐에 따라 반환하는 값이 달라지는 경우
+
+```
+function getSound(animal) {
+ const sounds = {
+  개: '멍멍!',
+  고양이: '야옹-',
+  참새: '짹짹',
+  비둘기: '구구 구 구'
+ };
+ return sounds[animal] || '...?';
+}
+
+console.log(getSound('개'));
+console.log(getSound('비둘기'));
+console.log(getSound('인간'));
+
+// 멍멍!
+   구구 구 구!
+   ...?
+```
+
+:point_down:특정 값이 무엇으로 주어지느냐에 따라서 다른 코드를 실행하고 싶을 때
+
+```
+function makeSound(animal) {
+ const tasks = {
+  개: () => {
+   console.log('멍멍!');
+  },
+  고양이: () {
+   console.log('야옹!');
+  },
+  비둘기: function()  {     // 추천X
+   console.log('구구 구 구');
+  }
+ }
+
+ const task = tasks[animal];
+ if (!tasks) {
+  console.log('...?');
+  return;
+ }
+ tasks[animal]();
+}
+
+makeSound('개');
+makeSound('비둘기');
+makeSound('인간');
+
+// 멍멍!
+   구구 구 구
+   ...?
+```
