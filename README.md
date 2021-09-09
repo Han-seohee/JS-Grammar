@@ -711,3 +711,120 @@ const extracted = {
 
 console.log(extracted);
 ```
+
+---
+### :dog:spread와 rest - spread 연산자
+
+```
+const slime = {
+  name: '슬라임'
+}
+
+const cuteSlime = {
+  name: '슬라임',
+  attribute: 'cute'
+}
+
+const purpleCuteSlime = {
+  name: '슬라임',
+  attribute: 'cute',
+  color: 'purple'
+};
+
+console.log(slime);
+console.log(cuteSlime);
+console.log(purpleCuteSlime);
+
+/// Object {name: "슬라임"}
+    Object {name: "슬라임", attribute: "cute"}
+    Object {name: "슬라임", attribute: "cute", color: "purple"}
+```
+
+:point_down:기존에 만들었던 객체를 참고해서 새로운 객체를 만들고 싶다면 spread
+
+```
+const slime = {
+  name: '슬라임'
+}
+
+const cuteSlime = {
+  ...slime,
+  attribute: 'cute'
+}
+
+const purpleCuteSlime = {
+  name: '슬라임',
+  ...cuteSlime,
+  color: 'purple'
+};
+
+console.log(slime);
+console.log(cuteSlime);
+console.log(purpleCuteSlime);
+
+/// Object {name: "슬라임"}
+    Object {name: "슬라임", attribute: "cute"}
+    Object {name: "슬라임", attribute: "cute", color: "purple"}
+```
+
+>배열에서 사용
+
+```
+const animals = ['개', '고양이', '참새'];
+const anotherAnimals = [...animals, '비둘기'];
+
+console.log(animals);
+console.log(anotherAnimals);
+
+// ['개', '고양이', '참새']
+   ['개', '고양이', '참새', '비둘기']
+```
+
+>spread연산자를 여러번 사용
+
+```
+const numbers = [1, 2, 3, 4, 5];
+
+const spreadNumbers = [...numbers, 1000, ...numbers];
+console.log(spreadNumbers);
+
+//  [1, 2, 3, 4, 5, 1000, 1, 2, 3, 4, 5]
+```
+
+---
+### :dog:spread와 rest - rest
++ 퍼져있는 것들을 모아오는 역할
+
+```
+const purpleCuteSlime = {
+  name: '슬라임',
+  attribute: 'cute',
+  color: 'purple'
+};
+
+const { color, ...cuteSlime } = purpleCuteSlime;
+console.log(color);
+console.log(cuteSlime);
+
+const { attribute, ...slime } = cuteSlime;
+console.log(slime);
+
+// purple
+   Object {name: "슬라임", attribute: "cuteSlime", color: "purple"}
+   Object {name: "슬라임"}
+```
+
+>배열에서 사용
+
+```
+const numbers = [0, 1, 2, 3, 4, 5, 6];
+
+const[one, ...rest] = numbers;    //rest가 앞에 올수는 없음
+console.log(one);
+console.log(two);
+console.log(rest);
+
+//0
+  1
+  [2, 3, 4, 5, 6]
+```
