@@ -470,3 +470,244 @@ makeSound('인간');
    구구 구 구
    ...?
 ```
+
+---
+2021.09.09
+### :dog:비구조화 할당
+
+>객체 복습
+
+```
+const object = { a: 1, b: 2};
+const {a, b} = object;
+console.log(a);
+console.log(b);
+
+// 1
+   2
+
+```
+
+:point_down: 함수의 파라미터에서 사용
+
+```
+const object = { a: 1, b: 2 };
+
+function print({ a, b }) {
+  console.log(a);
+  console.log(b);
+}
+
+print(object);
+
+// 1
+   2
+```
+
+:point_down: 값이 없을 때 기본값을 쓰고싶다면
+
+```
+const object = { a: 1 };
+
+function print({ a, b = 2 }) {
+  console.log(a);
+  console.log(b);
+}
+
+print(object);
+
+// 1
+   2
+```
+
+```
+const object = { a: 1 };
+
+function { a, b = 2 } = object;   // 기본값 사용시 이퀄사인
+  console.log(a);
+  console.log(b);
+}
+
+// 1
+   2
+```
+
+>비구조화 할당시 이름을 바꾸는 방법
+
+```
+const animal = {
+  name: '멍멍이',
+  type: '개'
+};
+
+const nickname = animal.name;
+
+console.log(nickname);
+
+// 멍멍이
+```
+
+:point_down: 비구조화 할당
+
+```
+const animal = {
+  name: '멍멍이',
+  type: '개'
+};
+
+const { name: nickname } = animal;
+
+console.log(nickname);
+console.log(animal);
+
+// 멍멍이
+   Object {name: "멍멍이", type: "개"}
+```
+
+>배열 비구조화 할당
+
+```
+const array = [1, 2];
+
+const one = array[0];
+const two = array[1];
+
+console.log(one);
+console.log(two);
+
+// 1
+   2
+```
+
+:point_down:
+
+```
+const array = [1, 2];
+
+const [one, two] = array;
+
+console.log(one);
+console.log(two);
+
+// 1
+   2
+```
+
+:point_down: 기본값 넣기
+
+```
+const array = [1];
+
+const [one, two = 2] = array;
+
+console.log(one);
+console.log(two);
+
+// 1
+   2
+```
+
+>객체의 깊숙한 곳에 들어있는 값 꺼내기
+
+```
+const deepObject = {
+  state: {
+    information: {
+      name: 'seohee',
+      languages: ['korean', 'english', 'chinese']
+    }
+  },
+  value: 5
+}
+```
+
+:point_down: name, languages, value 값 꺼내기
+> 1. 비구조화 할당 문법 두번 사용하기
+
+```
+const deepObject = {
+  state: {
+    information: {
+      name: 'seohee',
+      languages: ['korean', 'english', 'chinese']
+    }
+  },
+  value: 5
+}
+
+const { name, languages } = deepObject.state.information;
+const { value } = deepObject;
+
+const extracted = {
+  name,   // 특정 개체를 만들 때 특정 key 이름으로 선언된 값이 이미 있다면 value값 설정 생략 가능
+  languages,
+  value
+};
+
+console.log(extracted);
+
+// Object {~~}
+```
+
+:point_down: name, languages, value 값 꺼내기
+> 2. 비구조화 할당 한번으로 여러 값을 빼오기
+
+```
+const deepObject = {
+  state: {
+    information: {
+      name: 'seohee',
+      languages: ['korean', 'english', 'chinese']
+    }
+  },
+  value: 5
+}
+
+const {
+  state: {
+    information: {
+      name, languages
+    }
+  },
+  value
+} = deepObject;
+
+const extracted = {
+  name,
+  languages,
+  value
+};
+
+console.log(extracted);
+```
+
+:point_down: (추천X)
+
+```
+const deepObject = {
+  state: {
+    information: {
+      name: 'seohee',
+      languages: ['korean', 'english', 'chinese']
+    }
+  },
+  value: 5
+}
+
+const {
+  state: {
+    information: {
+      name, languages: [firstLang, secondLang]
+    }
+  },
+  value
+} = deepObject;
+
+const extracted = {
+  name,
+  firstLang, secondLang,
+  value
+};
+
+console.log(extracted);
+```
