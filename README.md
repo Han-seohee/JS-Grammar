@@ -828,3 +828,168 @@ console.log(rest);
   1
   [2, 3, 4, 5, 6]
 ```
+
+---
+### :dog:spread와 rest - 함수 파라미터에서의 rest
+
+```
+function sum(a, b, c, d, e, f, g) {
+  return a + b + c + d + e + f + g;
+}
+
+console.log(sum(1,2,3,4,5,6));
+
+//NaN
+```
+
+:point_down:
+
+```
+function sum(a, b, c, d, e, f, g) {
+  let result = 0;
+  if (a) result += a;
+  if (b) result += b;
+  if (c) result += c;
+  if (d) result += d;
+  if (e) result += e;
+  if (f) result += f;
+  if (g) result += g;
+  return result
+}
+
+console.log(sum(1,2,3,4,5,6));
+```
+
+:point_down:
+
+```
+function sum(...rest) {
+ return rest.reduce((acc, current) => acc + current, 0);
+}
+
+console.log(sum(1,2,3,4,5,6,7,8));
+
+// 36
+```
+
+---
+### :dog:spread와 rest - 함수 인자에서의 spread
+
+```
+function sum(...rest) {
+  return rest.reduce((acc, current) => acc + current, 0);
+}
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8];
+console.log(sum(...numbers));
+
+// 36
+```
+
+---
+### :dog:scope의 이해
+1. Global -전역
+2. Function - 특정 함수 내부에서 사용 가능
+3. Block - if, for, switch 중괄화 블록 내부에서만 사용 가능
+
++ Global
+
+```
+const value = 'hello!';
+
+function myFunction() {
+  console.log('myFunction: ');
+  console.log(value);
+}
+
+function otherFunction() {
+  console.log('otherFunction: ');
+  const value = 'bye!';
+  console.log(value);
+}
+
+myFunction();
+otherFunction();
+
+console.log('global scope:' );
+console.log(value);
+
+// myFunction:
+   hello!
+   otherFunction:
+   bye!
+   global scope:
+   hello!
+```
+
++ Function
+
+```
+const value = 'hello!';
+
+function myFunction() {
+  const value = 'bye!';
+  const anotherValue = 'world';
+  function functionInside() {
+    console.log('functionInside: ')
+    console.log(value);
+    console.log(anotherValue);
+  }
+  functionInside();
+}
+
+myFunction();
+console.log('global scope:');
+console.log(value);
+console.log(anotherValue);
+
+// functionInside:
+   bye!
+   world
+   global scope:
+   hello!
+   Error
+```
+
++ Block
+
+```
+const value = 'hello!';
+
+function myFunction() {
+  const value = 'bye!';
+  if (true) {
+    const value = 'world';
+    console.log('block scope:' );
+    console.log(value);
+  }
+  console.log('function scope: ');
+  console.log(value);
+}
+
+myFunction();
+console.log('global scope:');
+console.log(value);
+
+// block scope:
+   world
+   function scope:
+   bye!
+   global scope:
+   hello!
+```
+
+---
+### :dog:scope의 이해 - hoisting
+>자바스크립트에서 아직 선언되지 않은 함수 또는 변수를 끌어올려 사용할수 있는 작동 방식
+>>피해야함
+
+```
+myFunction();
+
+function myFunction() {
+  console.log('hello world');
+}
+
+// hello world
+```
